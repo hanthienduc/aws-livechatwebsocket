@@ -1,10 +1,10 @@
 import type { AWS } from '@serverless/typescript'
 
 const dynamoResources: AWS['resources']['Resources'] = {
-    urlTable: {
+    reminderTable: {
         Type: 'AWS::DynamoDB::Table',
         Properties: {
-            TableName: '${self:custom.urlTableName}',
+            TableName: '${self:custom.reminderTable}',
             AttributeDefinitions: [
                 {
                     AttributeName: 'id',
@@ -18,6 +18,11 @@ const dynamoResources: AWS['resources']['Resources'] = {
                 },
             ],
             BillingMode: 'PAY_PER_REQUEST',
+
+            TimeToLiveSpecification: {
+                AttributeName: 'TTL',
+                Enabled: true,
+            },
         },
     },
 }

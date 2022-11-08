@@ -4,7 +4,7 @@ import functions from './serverless/functions'
 import dynamoResources from './serverless/dynamoresources'
 
 const serverlessConfiguration: AWS = {
-    service: 'urlshortener',
+    service: 'reminderapp',
     frameworkVersion: '3',
     plugins: ['serverless-esbuild'],
     provider: {
@@ -16,7 +16,7 @@ const serverlessConfiguration: AWS = {
             {
                 Effect: 'Allow',
                 Action: 'dynamodb:*',
-                Resource: 'arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${self:custom.urlTableName}',
+                Resource: 'arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${self:custom.reminderTable}',
             },
         ],
         apiGateway: {
@@ -26,7 +26,7 @@ const serverlessConfiguration: AWS = {
         environment: {
             AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
             NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-            urlTable: '${self:custom.urlTableName}',
+            reminderTable: '${self:custom.reminderTable}',
             baseUrl: {
                 'Fn::Join': [
                     '',
@@ -48,7 +48,7 @@ const serverlessConfiguration: AWS = {
     },
     package: { individually: true },
     custom: {
-        urlTableName: '${sls:stage}url-table',
+        reminderTable: '${sls:stage}reminder-table',
         esbuild: {
             bundle: true,
             minify: false,
