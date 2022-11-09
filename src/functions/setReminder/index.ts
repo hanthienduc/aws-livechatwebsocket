@@ -27,13 +27,7 @@ export const handler = async (event: APIGatewayProxyEvent) => {
             id: uuid(),
             TTL: reminderDate / 1000,
             pk: userId,
-            sk: reminderDate,
-            
-            userId,
-            reminder,
-            email,
-            phoneNumber,
-            reminderDate
+            sk: reminderDate.toString(),
         }
 
         await dynamo.write(data, tableName)
@@ -72,7 +66,7 @@ const validateInputs = ({
         return formatJSONResponse({
             statusCode: 400,
             data: {
-                message: 'email or phone number required tgo create a reminder',
+                message: 'email or phone number required to create a reminder',
             },
         })
     }
