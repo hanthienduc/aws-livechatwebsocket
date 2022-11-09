@@ -27,7 +27,13 @@ export const handler = async (event: APIGatewayProxyEvent) => {
             id: uuid(),
             TTL: reminderDate / 1000,
             pk: userId,
-            sk: reminderDate.toString(),
+            sk: reminderDate,
+            
+            userId,
+            reminder,
+            email,
+            phoneNumber,
+            reminderDate
         }
 
         await dynamo.write(data, tableName)
