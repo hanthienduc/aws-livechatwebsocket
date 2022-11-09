@@ -13,7 +13,7 @@ const functions: AWS['functions'] = {
     ],
   },
   getReminders: {
-    handler: 'src/functions getReminders/index.handler',
+    handler: 'src/functions/getReminders/index.handler',
     events: [
       {
         httpApi: {
