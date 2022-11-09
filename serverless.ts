@@ -1,7 +1,7 @@
 import type { AWS } from '@serverless/typescript'
 
 import functions from './serverless/functions'
-import dynamoResources from './serverless/dynamoresources'
+import dynamoResources from './serverless/dynamoResources'
 
 const serverlessConfiguration: AWS = {
     service: 'reminderapp',
