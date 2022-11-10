@@ -4,7 +4,7 @@ import { APIGatewayProxyEvent } from 'aws-lambda'
 
 export const handler = async (event: APIGatewayProxyEvent) => {
   try {
-    const tableName = process.env.reminderTable
+    const tableName = process.env.roomConnectionTable
 
     const { userId } = event.pathParameters || {}
 
