@@ -5,11 +5,25 @@ import {
 } from '@aws-sdk/client-apigatewaymanagementapi'
 
 export const websocket = {
+  createClient: ({
+    domainName,
+    stage,
+  }: {
+    domainName: string
+    stage: string
+  }) => {
+    const client = new ApiGatewayManagementApiClient({
+      endpoint: `https://${domainName}/${stage}`,
+    })
+    return client
+  },
+
   send: ({
     data,
     connectionId,
     domainName,
     stage,
+    client,
   }: {
     data: {
       message?: string
@@ -19,10 +33,16 @@ export const websocket = {
     connectionId: string
     domainName: string
     stage: string
+    client?: ApiGatewayManagementApiClient
   }) => {
-    const client = new ApiGatewayManagementApiClient({
-      endpoint: `https://${domainName}/${stage}`,
-    })
+    if (!client) {
+      if (!domainName || !stage) {
+        throw Error(
+          'domainName or stage is required when no client is provided'
+        )
+      }
+      client = websocket.createClient({ domainName, stage })
+    }
 
     const params: PostToConnectionCommandInput = {
       ConnectionId: connectionId,

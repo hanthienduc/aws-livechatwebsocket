@@ -51,6 +51,8 @@ export const handler = async (event: APIGatewayProxyEvent) => {
       index: 'index1',
     })
 
+    const websocketClient = websocket.createClient({ domainName, stage })
+
     const messagePromiseArray = roomUsers
       .filter((targetUser) => {
         return targetUser.id !== existingUser.id
