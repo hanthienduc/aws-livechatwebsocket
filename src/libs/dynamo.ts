@@ -6,6 +6,8 @@ import {
   GetCommandInput,
   QueryCommand,
   QueryCommandInput,
+  DeleteCommandInput,
+  DeleteCommand,
 } from '@aws-sdk/lib-dynamodb'
 const dynamoClient = new DynamoDBClient({})
 
@@ -35,7 +37,7 @@ export const dynamo = {
 
     return response.Item as T
   },
-  query: async <T = Record<string, any>> ({
+  query: async <T = Record<string, any>>({
     tableName,
     index,
     pkValue,
@@ -74,5 +76,16 @@ export const dynamo = {
     const res = await dynamoClient.send(command)
 
     return res.Items as T[]
+  },
+
+  delete: (id: string, tableName: string) => {
+    const params: DeleteCommandInput = {
+      TableName: tableName,
+      Key: {
+        id,
+      },
+    }
+    const command = new DeleteCommand(params)
+    return dynamoClient.send(command)
   },
 }
