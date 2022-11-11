@@ -31,8 +31,8 @@ export const websocket = {
       from?: string
     }
     connectionId: string
-    domainName: string
-    stage: string
+    domainName?: string
+    stage?: string
     client?: ApiGatewayManagementApiClient
   }) => {
     if (!client) {
